@@ -6,7 +6,6 @@ from PIL import ImageGrab
 import numpy as np
 import cv2
 
-
 def get_dominant_screen_color(scale_factor=0.1):
     # Grab the screen image
     screen = ImageGrab.grab()
