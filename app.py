@@ -6,7 +6,6 @@ from PIL import ImageGrab
 import numpy as np
 import cv2
 
-# pyinstaller --one-file -w app.py in powershell
 
 def get_dominant_screen_color(scale_factor=0.1):
     # Grab the screen image
@@ -65,13 +64,11 @@ def send_immersive(speed):
     else:
         status_label.config(text="Error: No color detected.")
 
-
 def send_rainbow(speed):
     speed = 21 - speed
     send_command("0," + str(speed) + ",0,0,0")
     selected_mode.set("rainbow")
     
-
 def send_pulse(speed, rgb):
     speed = 21 - speed
     rgb = parse_rgb(rgb)
@@ -80,7 +77,6 @@ def send_pulse(speed, rgb):
     else:
         status_label.config(text="No input provided.")
     selected_mode.set("pulse")
-    
 
 def on_closing():
     try:
@@ -101,10 +97,7 @@ def update_color():
 def periodic_update():
     if selected_mode.get() == "immersive":
         send_immersive(speed_var.get())
-    # Schedule this function to be called again after 1000 milliseconds (1 second)
     root.after(1500, periodic_update)
-
-# Call periodic_update initially when setting up your application
 
 try:
     ser = serial.Serial('COM4', 9600)
@@ -123,7 +116,7 @@ root.protocol("WM_DELETE_WINDOW", on_closing)
 custom_font = tkfont.Font(family="Helvetica", size=12, weight="bold")
 custom_font_normal = tkfont.Font(family="Helvetica", size=12)
 
-# Style
+# Styling the window
 style = ttk.Style()
 style.theme_use('clam')
 style.configure("TButton",
@@ -138,23 +131,22 @@ style.map("TButton",
           relief=[('pressed', 'flat')])
 
 
-
 # Using grid for mode label
 mode_label = tk.Label(root, text="Lighting effect:", font=custom_font)
-mode_label.grid(row=0, column=0, columnspan=3, sticky="w", padx=10, pady=10)  # Placed at the top with west alignment
+mode_label.grid(row=0, column=0, columnspan=3, sticky="w", padx=10, pady=10)
 mode_label_display = tk.Label(root, textvariable=selected_mode, font=custom_font_normal)
-mode_label_display.grid(row=0, column=1, columnspan=3, sticky="w", padx=10, pady=10)  # Placed at the top with west alignment
+mode_label_display.grid(row=0, column=1, columnspan=3, sticky="w", padx=10, pady=10)
 
 # RGB scales
 red_scale = tk.Scale(root, from_=0, to=255, orient=tk.HORIZONTAL, label="Red", command=lambda x: update_color())
 red_scale.grid(row=2, column=0, padx=10)
-red_scale.set(0)  # Set initial red value for purple
+red_scale.set(0)
 green_scale = tk.Scale(root, from_=0, to=255, orient=tk.HORIZONTAL, label="Green", command=lambda x: update_color())
 green_scale.grid(row=2, column=1, padx=10)
-green_scale.set(0)   # Set initial green value for purple
+green_scale.set(0)
 blue_scale = tk.Scale(root, from_=0, to=255, orient=tk.HORIZONTAL, label="Blue", command=lambda x: update_color())
 blue_scale.grid(row=2, column=2, padx=10)
-blue_scale.set(0)  # Set initial blue value for purple
+blue_scale.set(0)
 
 # Styling the scales
 for scale in (red_scale, green_scale, blue_scale):
@@ -167,7 +159,7 @@ blue_scale.config(troughcolor="#1A21ED")
 color_var = tk.StringVar(value="#000000")  # Default color
 
 # Color display
-color_display = tk.Canvas(root, width=600, height=30, bg="#000000")  # Default purple background
+color_display = tk.Canvas(root, width=600, height=30, bg="#000000")
 color_display.grid(row=1, column=0, columnspan=4, pady=10, padx=10)
 
 # Speed control in line with RGB scales
