@@ -1,0 +1,9 @@
+# Exclude Visual Studio Code settings directory
+.vscode/
+
+# Exclude the spec file
+app.spec
+
+# Exclude build output directories
+build/
+dist/
